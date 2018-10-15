@@ -1,5 +1,5 @@
 var app = function() {
-
+	/*Model*/
 	var board = [];
 	var isEnd;
 	var winner;
@@ -22,11 +22,15 @@ var app = function() {
 		console.log('in initialze');
 		//Setup for game status and turn
 		document.body.querySelector('.gameStatus').innerText = 'New Game Started!';
-		document.body.querySelector('.turn').innerHTML = 'Turn: Player' + turn;
+		document.body.querySelector('.turn').innerText = 'Turn: Player' + this.turn;
 
 		//Setup for boxes: put click event listener to each box
 		var boxes = document.body.querySelectorAll('td');
 		boxes.forEach((box, index)=>{
+			//Add style
+			box.style.textAlign = "center";
+
+			//Add click event listener
 			box.addEventListener("click", ()=>{
 				clickBox(index);
 			});
@@ -47,30 +51,26 @@ var app = function() {
 			updateBoardView(row, col, turn);
 			//check for winning move
 			if(isWinningMove(row, col)){
-				isEnd = true;
-				winner = turn;
+				this.isEnd = true;
+				this.winner = turn;
 				updateGameViewForWinner(turn);
 			}
 
-			count++;
+			this.count++;
 			//check for tie
 			if(count === 9){
 				updateGameViewForWinner(0);
 			}
-			turn = turn===1? 2 : 1;
-			
-
-
-
+			this.turn = this.turn===1? 2 : 1;
 		//If it is not a valid move
 		}else{
-			prompt("Cick a valid box please");
+			alert("Cick a valid box please");
 		}	
 	}
 
-	//function isValid()
+	/*Controller*/
 	var isValidMove = function(row, col){
-		return this.board[row][col] === 0 && !isEnd;
+		return this.board[row][col] === 0 && !this.isEnd;
 	}
 	//check for winning
 	var isWinningMove = function(row,col){
@@ -82,40 +82,45 @@ var app = function() {
 	var isRowComplete = function(row, col){
 		let row = this.board[row];
 		return _.reduce(row, (accum, col)=>{
-			return accum && col === turn;
+			return accum && col === this.turn;
 		}, true)
 	}
 
 	var isColComplete = function(row, col){
 		var completed = true;
 		for(let i = 0; i <3; i++){
-			completed = completed && this.board[i][col] === turn;
+			completed = completed && this.board[i][col] === this.turn;
 		}
 		return completed;
 	}
 
+	var isDiagonalComplete = function(row, col){
 
+	}
+
+	/* View */
 	var updateBoardView = function(row, col){
 	//Make a query string
 	var query = '.row'+row+ ' .col'+col;
 	//var query = '.row1 .col1';
 	//Select the box
 	var selectedBox = document.body.querySelector(query);
-
-		//Change View
+		//Add marker in the box
 		selectedBox.innerText = marker();
 	}
 
-	//function updateGameView
-	//var updateGameViewForWinner = function()
+	var updateGameViewForWinner = function(winner){
+		if(winner !== 0){
+			document.body.querySelector('.gameStatus').innerText = 'Tied';	
+			document.body.querySelector('.turn').innerText = '¯\_(ツ)_/¯';
+		}
+		
+	}
 
 	//marker returns correct marker for the currentPlayer
 	var marker = function(){
 		return turn === 1 ? 'X' :'O';
 	}
-
-
-
 
 
 	initialize();
@@ -128,15 +133,12 @@ app();
 
 
 
-//Model
+
 
 //function isValid()
 //function isWinningMove(row, col)
 
 
-//View
-
-//function updateBoardView
 
 
 
