@@ -1,7 +1,7 @@
 var app = function() {
 	
 	/*Model*/
-	var board = [];
+	var board;
 	var isEnd;
 	var winner;
 	var turn;
@@ -38,6 +38,8 @@ var app = function() {
 		})
 	}
 
+
+	//Click event handler
 	var clickBox = function(index){
 		console.log('clicked: ' + index);
 		//get row and col index
@@ -46,28 +48,35 @@ var app = function() {
 
 		//checks whether it is a valid move with isValid
 		if(isValidMove(row, col) && !isEnd){
+			this.turn = this.turn===1? 2 : 1;
+			document.body.querySelector('.turn').innerText = 'Turn: Palyer '+ this.turn;
 			//update matrix 
-			this.board[row][col] = turn;
+			this.board[row][col] = this.turn;
+			console.log(this.board);
 			//update view
-			updateBoardView(row, col, turn);
+			updateBoardView(row, col);
 			//check for winning move
 			if(isWinningMove(row, col)){
 				this.isEnd = true;
-				this.winner = turn;
-				updateGameViewForWinner(turn);
+				this.winner = this.turn;
+				updateGameViewForWinner(this.turn);
+				console.log('it is a winning move!');
 			}
-
+			//Increase count
 			this.count++;
 			//check for tie
 			if(count === 9){
 				updateGameViewForWinner(0);
+				this.isEnd = true;
 			}
-			this.turn = this.turn===1? 2 : 1;
+			
 		//If it is not a valid move
 		}else{
 			alert("Cick a valid box please");
 		}	
 	}
+
+
 
 	/*Controller*/
 	var isRowComplete = function(row, col){
@@ -93,7 +102,7 @@ var app = function() {
 		if((row+col)%2 !== 0) return false;
 		else{	
 			for(var i = 0; i < 3; i++){
-				if(this.board[i][i] !== turn){
+				if(this.board[i][i] !== this.turn){
 					return false;
 				}
 			}
@@ -107,7 +116,7 @@ var app = function() {
 		if((row+col)%2 !== 0) return false;
 		else{	
 			for(var i = 0; i < 3; i++){
-				if(this.board[i][2-i] !== turn){
+				if(this.board[i][2-i] !== this.turn){
 					return false;
 				}
 			}
@@ -125,6 +134,7 @@ var app = function() {
 		   isMajorDiagonalComplete(row, col)||
 		   isMinorDiagonalComplete(row, col)
 		) return true;
+		return false;
 	}
 
 
@@ -141,15 +151,19 @@ var app = function() {
 
 	var updateGameViewForWinner = function(winner){
 		if(winner !== 0){
+			document.body.querySelector('.gameStatus').innerText = 'Winner: Player' + this.turn;	
+			document.body.querySelector('.turn').innerText = '¯\_(ツ)_/¯';
+		}else{
 			document.body.querySelector('.gameStatus').innerText = 'Tied';	
 			document.body.querySelector('.turn').innerText = '¯\_(ツ)_/¯';
+			
 		}
 		
 	}
 
 	//marker returns correct marker for the currentPlayer
 	var marker = function(){
-		return turn === 1 ? 'X' :'O';
+		return this.turn === 1 ? 'X' :'O';
 	}
 
 
