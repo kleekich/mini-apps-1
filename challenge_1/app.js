@@ -1,4 +1,5 @@
 var app = function() {
+	
 	/*Model*/
 	var board = [];
 	var isEnd;
@@ -69,21 +70,13 @@ var app = function() {
 	}
 
 	/*Controller*/
-	var isValidMove = function(row, col){
-		return this.board[row][col] === 0 && !this.isEnd;
-	}
-	//check for winning
-	var isWinningMove = function(row,col){
-		if(isRowComplete(row, col)||
-		   isColComplte(row, col)||
-		   isDiagonalComplete(row, col)
-		) return true;
-	}
 	var isRowComplete = function(row, col){
-		let row = this.board[row];
-		return _.reduce(row, (accum, col)=>{
-			return accum && col === this.turn;
-		}, true)
+		var accum = true;
+		this.board[row].forEach((col)=>{
+			accum = accum && col === this.turn;
+		});
+		return accum;
+
 	}
 
 	var isColComplete = function(row, col){
@@ -94,9 +87,46 @@ var app = function() {
 		return completed;
 	}
 
-	var isDiagonalComplete = function(row, col){
-
+	//major diagonal(left to right)
+	var isMajorDiagonalComplete = function(row, col){
+		//sum of row and col should be an even number to be valid diagonal strike
+		if((row+col)%2 !== 0) return false;
+		else{	
+			for(var i = 0; i < 3; i++){
+				if(this.board[i][i] !== turn){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
+
+	//Minor diagonal(right to left)
+	var isMinorDiagonalComplete = function(row, col){
+		//sum of row and col should be an even number to be valid diagonal strike
+		if((row+col)%2 !== 0) return false;
+		else{	
+			for(var i = 0; i < 3; i++){
+				if(this.board[i][2-i] !== turn){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	var isValidMove = function(row, col){
+		return this.board[row][col] === 0 && !this.isEnd;
+	}
+	//check for winning
+	var isWinningMove = function(row,col){
+		if(isRowComplete(row, col)||
+		   isColComplete(row, col)||
+		   isMajorDiagonalComplete(row, col)||
+		   isMinorDiagonalComplete(row, col)
+		) return true;
+	}
+
 
 	/* View */
 	var updateBoardView = function(row, col){
