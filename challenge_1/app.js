@@ -6,6 +6,8 @@ var app = function() {
 	var winner;
 	var turn;
 	var count;
+	var prevWinner;
+	var score;
 
 	var resetGame = function(){
 		console.log("RESET");
@@ -18,6 +20,7 @@ var app = function() {
 		this.winner= undefined;
 		this.turn = 1;
 		this.count = 0;
+		
 
 		//Change View
 		resetGameAndBoardView();
@@ -26,8 +29,15 @@ var app = function() {
 
 	var initialize = function(){
 		resetGame();
+		this.prevWinner = 1;
+		this.score = [0, 0];
 		//Setup for new game button with resetGame
 		document.body.querySelector('button').addEventListener("click", ()=>{resetGame()});		
+
+		//Setup for score board
+		document.body.querySelector('.scorePlayer1').innerText = 0;
+		document.body.querySelector('.scorePlayer2').innerText = 0;
+
 
 		//Setup for boxes: put click event listener to each box
 		var boxes = document.body.querySelectorAll('td');
@@ -64,15 +74,20 @@ var app = function() {
 			if(isWinningMove(row, col)){
 				this.isEnd = true;
 				this.winner = this.turn;
+				this.score[this.turn-1] = this.score[this.turn-1]+1;
+				this.prevWinner = this.turn;
 				updateGameViewForWinner(this.turn);
 				console.log('it is a winning move!');
 			}
-			//Increase count
+
+		
 			this.count++;
 			//check for tie
-			if(count === 9){
+			if(this.count === 9){
+				console.log("Tied!");
 				updateGameViewForWinner(0);
 				this.isEnd = true;
+
 			}
 			
 		//If it is not a valid move
@@ -154,8 +169,13 @@ var app = function() {
 
 	var updateGameViewForWinner = function(winner){
 		if(winner !== 0){
-			document.body.querySelector('.gameStatus').innerText = 'Winner: Player' + this.turn;	
+			document.body.querySelector('.gameStatus').innerText = 'Winner: Player' + winner;	
 			document.body.querySelector('.turn').innerText = '¯\_(ツ)_/¯';
+			if(winner === 1){
+				document.body.querySelector('.scorePlayer1').innerText = this.score[winner-1].toString();	
+			}else{
+				document.body.querySelector('.scorePlayer2').innerText = this.score[winner-1].toString();	
+			}	
 		}else{
 			document.body.querySelector('.gameStatus').innerText = 'Tied';	
 			document.body.querySelector('.turn').innerText = '¯\_(ツ)_/¯';
