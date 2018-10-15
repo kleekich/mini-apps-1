@@ -7,9 +7,8 @@ var app = function() {
 	var turn;
 	var count;
 
-
-	var initialize = function(){
-		//For each td, add click event listener(clickBox)
+	var resetGame = function(){
+		console.log("RESET");
 		this.board = [
 					[0, 0, 0],
 					[0, 0, 0],
@@ -20,10 +19,15 @@ var app = function() {
 		this.turn = 1;
 		this.count = 0;
 
-		console.log('in initialze');
-		//Setup for game status and turn
-		document.body.querySelector('.gameStatus').innerText = 'New Game Started!';
-		document.body.querySelector('.turn').innerText = 'Turn: Player' + this.turn;
+		//Change View
+		resetGameAndBoardView();
+
+	}
+
+	var initialize = function(){
+		resetGame();
+		//Setup for new game button with resetGame
+		document.body.querySelector('button').addEventListener("click", ()=>{resetGame()});		
 
 		//Setup for boxes: put click event listener to each box
 		var boxes = document.body.querySelectorAll('td');
@@ -49,6 +53,7 @@ var app = function() {
 		//checks whether it is a valid move with isValid
 		if(isValidMove(row, col) && !isEnd){
 			this.turn = this.turn===1? 2 : 1;
+			document.body.querySelector('.gameStatus').innerText = 'Waiting for';
 			document.body.querySelector('.turn').innerText = 'Turn: Palyer '+ this.turn;
 			//update matrix 
 			this.board[row][col] = this.turn;
@@ -75,8 +80,6 @@ var app = function() {
 			alert("Cick a valid box please");
 		}	
 	}
-
-
 
 	/*Controller*/
 	var isRowComplete = function(row, col){
@@ -164,6 +167,14 @@ var app = function() {
 	//marker returns correct marker for the currentPlayer
 	var marker = function(){
 		return this.turn === 1 ? 'X' :'O';
+	}
+
+	var resetGameAndBoardView = function(){
+		document.body.querySelector('.gameStatus').innerText = 'New Game Started!';
+		document.body.querySelector('.turn').innerText = 'Turn: Player' + this.turn;
+		document.body.querySelectorAll('td').forEach(box =>{
+			box.innerText = '';
+		})
 	}
 
 
