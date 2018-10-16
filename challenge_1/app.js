@@ -8,6 +8,8 @@ var app = function() {
 	var count;
 	var prevWinner;
 	var score;
+	var playerOneName;
+	var playerTwoName;
 
 	var resetGame = function(){
 		console.log("RESET");
@@ -29,8 +31,18 @@ var app = function() {
 
 	var initialize = function(){
 		resetGame();
+		
+		//Setup for username
+		this.playerOneName = prompt("What is player1's Name?");
+		this.playerTwoName = prompt("What is player2's Name?");
+		document.body.querySelector('.playerOneName').innerText = this.playerOneName;
+		document.body.querySelector('.playerTwoName').innerText = this.playerTwoName;
+
 		this.prevWinner = 1;
 		this.score = [0, 0];
+
+
+
 		//Setup for new game button with resetGame
 		document.body.querySelector('button').addEventListener("click", ()=>{resetGame()});		
 
@@ -64,7 +76,7 @@ var app = function() {
 		if(isValidMove(row, col) && !isEnd){
 			this.turn = this.turn===1? 2 : 1;
 			document.body.querySelector('.gameStatus').innerText = 'Waiting for';
-			document.body.querySelector('.turn').innerText = 'Turn: Palyer '+ this.turn;
+			document.body.querySelector('.turn').innerText = 'Turn: '+ marker();
 			//update matrix 
 			this.board[row][col] = this.turn;
 			console.log(this.board);
@@ -78,6 +90,7 @@ var app = function() {
 				this.prevWinner = this.turn;
 				updateGameViewForWinner(this.turn);
 				console.log('it is a winning move!');
+				return;
 			}
 
 		
@@ -191,36 +204,11 @@ var app = function() {
 
 	var resetGameAndBoardView = function(){
 		document.body.querySelector('.gameStatus').innerText = 'New Game Started!';
-		document.body.querySelector('.turn').innerText = 'Turn: Player' + this.turn;
+		document.body.querySelector('.turn').innerText = 'Turn: ' + marker();
 		document.body.querySelectorAll('td').forEach(box =>{
 			box.innerText = '';
 		})
 	}
-
-
 	initialize();
 }
 app();
-
-
-
-
-
-
-
-
-
-//function isValid()
-//function isWinningMove(row, col)
-
-
-
-
-
-//TODOs
-/*
-	1. install underscore
-	2. turn
-*/
-
-
