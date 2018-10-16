@@ -180,6 +180,7 @@ var app = function() {
 		selectedBox.innerText = marker();
 	}
 
+
 	var updateGameViewForWinner = function(winner){
 		if(winner !== 0){
 			document.body.querySelector('.gameStatus').innerText = 'Winner: Player' + winner;	
