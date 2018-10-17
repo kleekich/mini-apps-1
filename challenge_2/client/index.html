@@ -2,13 +2,15 @@
 <html>
 	<head>
 		<title>Kangsik's CSV Report Generator</title>
+		
 	</head>
 	<body>
 		<h1>Kangsik's CSV Report Generator</h1>
 		<form method='post' action='/'>
-			JSON text: <input id='inputFile' type='textArea' name='userInputFile' onclick='readFile' />
+			JSON text: <input id='inputFile' type='file' name='userInputFile' onchange='app.readFile()' />
 			<input type='submit'/>
 		</form>
+		<script type="text/javascript" src="app.js"></script>
 	</body>
 </html>
 

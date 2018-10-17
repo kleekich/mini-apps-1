@@ -28,7 +28,10 @@ app.post('/', function(req, res){
 	// console.log(selectedFile);
 
 	//Creating JSON string ommiting ';' at the end
-	var jsonStr = req.body.userInputFile;
+	console.log("************************")
+	console.log(req.body);
+	console.log("************************")
+	var jsonStr = req.body;
 	jsonStr = jsonStr.substr(0,jsonStr.length-1);
 	var objectJSON = JSON.parse(jsonStr);
 
@@ -67,7 +70,7 @@ app.post('/', function(req, res){
 		}
 		return aggregateArr.join('');
 	}
-
+ 
 	var csv = buildCSV(objectJSON);
 	
 

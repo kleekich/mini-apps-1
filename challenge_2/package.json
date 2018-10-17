@@ -6,6 +6,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "filereader": "^0.10.3",
+    "jquery": "^3.3.1",
     "nodemon": "^1.18.4",
     "path": "^0.12.7"
   },
