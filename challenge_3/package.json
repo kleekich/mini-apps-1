@@ -10,11 +10,13 @@
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
+    "babel-preset-react": "^6.24.1",
     "nodemon": "^1.18.4"
   },
   "scripts": {
+    "start": "babel . --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline -w",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "run": "nodemon server.js"
   },
   "author": "",
   "license": "ISC"
