@@ -21,12 +21,18 @@ app.use(bodyParser.urlencoded());
 
 
 app.post('/', function(req, res){
+	// const reader = new FileReader()
+	// var files = req.body;
+	// console.log(files);
+	// var selectedFile = files[0];
+	// console.log(selectedFile);
+
 	//Creating JSON string ommiting ';' at the end
-	var jsonStr = req.body.userInput;
+	var jsonStr = req.body.userInputFile;
 	jsonStr = jsonStr.substr(0,jsonStr.length-1);
 	var objectJSON = JSON.parse(jsonStr);
 
-	
+
 
 	var buildCSV = function(objectJSON){
 		//Aggregate arra
@@ -63,11 +69,20 @@ app.post('/', function(req, res){
 	}
 
 	var csv = buildCSV(objectJSON);
-	console.log('------------------------------------');
-	console.log(csv);
-	console.log('------------------------------------');
+	
 
-	res.redirect('/');
+	res.write('<html>');
+	res.write('<body>');
+	res.write('<h1>Hello, World!</h1>');
+	res.write("<h1>Kangsik's CSV Report Generator</h1>");
+	res.write("<form method='post' action='/'>");
+	res.write("JSON text: <input id='input' type='textarea' name='userInputFile'/>");
+	res.write("<input type='submit'/>");
+	res.write("</form>");
+	res.write('<p>'+csv+'</p>');
+	res.write('</body>');
+	res.write('</html>');
+	res.end();
 })
 
 var port = 3000;
