@@ -4,19 +4,25 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "express": "^4.16.4",
-    "react": "^16.5.2"
+    "path": "^0.12.7",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
-    "babel-preset-react": "^6.24.1",
+    "babel-cli": "^6.6.5",
+    "babel-plugin-react": "1.0.0",
+    "babel-preset-react": "^6.5.0",
     "nodemon": "^1.18.4"
   },
   "scripts": {
-    "start": "babel . --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline -w",
+    "dev": "babel client --out-dir public --presets=env,react --source-maps inline --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "nodemon server.js"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC"
