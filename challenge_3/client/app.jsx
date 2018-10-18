@@ -11,7 +11,9 @@ class App extends React.Component {
 	handleButtonClick(currentPage){
 		this.setState({currentPage: currentPage});
 		console.log('button clicked page: ', currentPage)
-		//this.setState({currentPage: nextPage})
+		//Handle Database calls
+
+
 		
 	};
 	render(){
