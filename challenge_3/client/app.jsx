@@ -19,16 +19,21 @@ class App extends React.Component {
 		//this.setState({currentPage: nextPage})
 		switch(currentPage){
 			case 0:
-				ReactDOM.render(<FormOne />, document.querySelector('#app'))
+				ReactDOM.render(<FormOne handleClick = {this.handleButtonClick}/>, document.querySelector('#app'))
 				break;
 			case 1:
-				ReactDOM.render(<FormTwo />, document.querySelector('#app'));
-			break;
+				ReactDOM.render(<FormTwo handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
+				break;
 			case 2:
-				ReactDOM.render(<FormThree />, document.querySelector('#app'));
+				ReactDOM.render(<FormThree handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
 				break;
 			case 3:
-				ReactDOM.render(<ConfirmationPage />, document.querySelector('#app'));
+				ReactDOM.render(<ConfirmationPage handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
+				break;
+			case 4:
+				//handle database
+
+				ReactDOM.render(<App />, document.querySelector('#app'));
 				break;
 		}	
 	};
@@ -43,39 +48,40 @@ class App extends React.Component {
 	}
 }
 
-var FormOne = () => (
+var FormOne = (props) => (
+
 			<div>
 				Name: <input type="text"/>
 				Email: <input type="email"/>
 				Password: <input type="password"/>
-				<button onClick={()=>{handleButtonClick(1)}}>Next</button>
+				<button onClick={()=>{props.handleClick(1)}}>Next</button>
 			</div>
 		)
 
-var FormTwo = () => (
+var FormTwo = (props) => (
 			<div>
 				Address Line1: <input type="text"/>
 				Address Line2: <input type="text"/>
 				City: <input type="text"/>
 				State: <input type="text"/>
 				Zip Code: <input type="text"/>
-				<button>Next</button>
+				<button onClick={()=>{props.handleClick(2)}}>Next</button>
 			</div>
 
 		)
 
-var FormThree = () => (
+var FormThree = (props) => (
 			<div>
 				Credit Card Number: <input type="text"/>
 				Expiration Date: <input type="text"/>
 				CVV: <input type="text"/>
 				Billing Zip Code: <input type="text"/>
-				<button>Confirm</button>
+				<button onClick={()=>{props.handleClick(3)}}>Confirm</button>
 			</div>
 		)
 
 
-var ConfirmationPage = () => (
+var ConfirmationPage = (props) => (
 			<div>
 				<div>Name: </div>
 				<div>Email: </div>
@@ -89,7 +95,7 @@ var ConfirmationPage = () => (
 				<div>Expiration Date: </div>
 				<div>CVV: </div>
 				<div>Billing Zip Code: </div>
-				
+				<button onClick={()=>{props.handleClick(4)}}>Purchase</button>
 
 			</div>
 		)
