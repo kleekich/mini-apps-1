@@ -20,7 +20,7 @@
     "nodemon": "^1.18.4"
   },
   "scripts": {
-    "dev": "babel client --out-dir public --presets=env,react --source-maps inline --watch",
+    "dev": "babel client --out-dir public --ignore:server.js --presets=env,react --source-maps inline --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
