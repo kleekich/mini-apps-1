@@ -1,55 +1,45 @@
 class App extends React.Component {
-
-
 	constructor(props){
 		super(props);
 		this.state = {
 			currentPage: undefined,
-			name: undefined,
-			email: undefined,
-			password: undefined,
-
 		}
 
 		this.handleButtonClick = this.handleButtonClick.bind(this);
 	};
 
 	handleButtonClick(currentPage){
+		this.setState({currentPage: currentPage});
 		console.log('button clicked page: ', currentPage)
 		//this.setState({currentPage: nextPage})
-		switch(currentPage){
+		
+	};
+	render(){
+		switch(this.state.currentPage){
 			case 0:
-				ReactDOM.render(<FormOne handleClick = {this.handleButtonClick}/>, document.querySelector('#app'))
+				return(<FormOne handleClick = {this.handleButtonClick}/>);
 				break;
 			case 1:
-				ReactDOM.render(<FormTwo handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
+				return(<FormTwo handleClick = {this.handleButtonClick}/>);
 				break;
 			case 2:
-				ReactDOM.render(<FormThree handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
+				return(<FormThree handleClick = {this.handleButtonClick}/>);
 				break;
 			case 3:
-				ReactDOM.render(<ConfirmationPage handleClick = {this.handleButtonClick}/>, document.querySelector('#app'));
+				return(<ConfirmationPage handleClick = {this.handleButtonClick}/>);
 				break;
-			case 4:
-				//handle database
-
-				ReactDOM.render(<App />, document.querySelector('#app'));
-				break;
+			default:
+				return(
+					<div>
+					 	<h1>Welcom To Checkout Form!</h1>
+						<button onClick={()=>{this.handleButtonClick(0)}}>Checkout</button>
+					</div>
+				)
 		}	
-	};
-
-	render(){
-		return(
-			<div>
-			 	<h1>Welcom To Checkout Form!</h1>
-				<button onClick={()=>{this.handleButtonClick(0)}}>Checkout</button>
-			</div>
-		)
 	}
 }
 
 var FormOne = (props) => (
-
 			<div>
 				Name: <input type="text"/>
 				Email: <input type="email"/>
@@ -57,7 +47,6 @@ var FormOne = (props) => (
 				<button onClick={()=>{props.handleClick(1)}}>Next</button>
 			</div>
 		)
-
 var FormTwo = (props) => (
 			<div>
 				Address Line1: <input type="text"/>
@@ -67,9 +56,7 @@ var FormTwo = (props) => (
 				Zip Code: <input type="text"/>
 				<button onClick={()=>{props.handleClick(2)}}>Next</button>
 			</div>
-
 		)
-
 var FormThree = (props) => (
 			<div>
 				Credit Card Number: <input type="text"/>
@@ -79,8 +66,6 @@ var FormThree = (props) => (
 				<button onClick={()=>{props.handleClick(3)}}>Confirm</button>
 			</div>
 		)
-
-
 var ConfirmationPage = (props) => (
 			<div>
 				<div>Name: </div>
@@ -95,10 +80,8 @@ var ConfirmationPage = (props) => (
 				<div>Expiration Date: </div>
 				<div>CVV: </div>
 				<div>Billing Zip Code: </div>
-				<button onClick={()=>{props.handleClick(4)}}>Purchase</button>
-
+				<button onClick={()=>{props.handleClick()}}>Purchase</button>
 			</div>
 		)
-
 
 ReactDOM.render(<App />, document.querySelector('#app'));
