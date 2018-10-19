@@ -1,9 +1,0 @@
-
-var board = () =>{
-
-	return (
-		
-
-
-	);
-}
